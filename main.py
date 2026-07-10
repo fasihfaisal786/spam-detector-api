@@ -7,7 +7,7 @@ import nltk
 
 nltk.download('stopwords')
 
-# Model aur Vectorizer load karo
+
 model = joblib.load('spam_model.pkl')
 vectorizer = joblib.load('tfidf_vectorizer.pkl')
 
