@@ -77,9 +77,9 @@ with tab1:
                 with st.spinner("AI analyzing message..."):
                     try:
                         response = requests.post(
-                            "http://127.0.0.1:8000/predict",
-                            json={"message": message}
-                        )
+    "https://spam-detector-api-production-308d.up.railway.app/predict",
+    json={"message": message}
+)   
                         result = response.json()
                         prediction = result["prediction"]
                         confidence = result["confidence"]
