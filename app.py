@@ -38,7 +38,7 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-# ---------- SESSION STATE (history store karne ke liye) ----------
+# ---------- SESSION STATE (to store history) ----------
 if "history" not in st.session_state:
     st.session_state.history = []
 if "spam_count" not in st.session_state:
@@ -65,14 +65,14 @@ with tab1:
     left, right = st.columns([2, 1])
 
     with left:
-        st.subheader("Message Check Karo")
-        message = st.text_area("Message likho ya paste karo:", height=140, placeholder="e.g. Congratulations! You won a free prize...")
+        st.subheader("Check Your Message")
+        message = st.text_area("Enter or paste your message:", height=140, placeholder="e.g. Congratulations! You won a free prize...")
 
         check = st.button("🔎 Analyze Message", use_container_width=True, type="primary")
 
         if check:
             if message.strip() == "":
-                st.warning("⚠️ Pehle koi message likho!")
+                st.warning("⚠️ Please enter a message first!")
             else:
                 with st.spinner("AI analyzing message..."):
                     try:
@@ -84,7 +84,7 @@ with tab1:
                         prediction = result["prediction"]
                         confidence = result["confidence"]
 
-                        # History mein add karo
+                        # Add to history
                         st.session_state.history.insert(0, {
                             "message": message,
                             "prediction": prediction,
@@ -96,7 +96,7 @@ with tab1:
                             st.session_state.ham_count += 1
 
                     except Exception as e:
-                        st.error(f"Backend se connect nahi ho paya. Kya FastAPI server chal raha hai? Error: {e}")
+                        st.error(f"Could not connect to the backend. Is the FastAPI server running? Error: {e}")
                         st.stop()
 
                 st.markdown("### Result:")
@@ -130,8 +130,8 @@ with tab1:
 with tab2:
     st.subheader("About This Project")
     st.write("""
-    Yeh ek **Machine Learning powered Spam Detector** hai jo SMS/text messages ko 
-    automatically classify karta hai — Spam ya Normal (Ham).
+    This is a **Machine Learning powered Spam Detector** that automatically classifies 
+    SMS/text messages as Spam or Normal (Ham).
     """)
     st.write("**Tech Stack:**")
     st.write("- 🧠 Model: Logistic Regression")
